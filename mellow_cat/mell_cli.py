@@ -47,11 +47,23 @@ def change_directory(new_dir):
     except FileNotFoundError:
         print(f"Directory '{new_dir}' not found.")
 
+# Function to display current directory
+def print_current_directory():
+    print(f"Current directory: {os.getcwd()}")
+
+# Function to create a new directory
+def make_directory(dir_name):
+    try:
+        os.mkdir(dir_name)
+        print(f"Directory '{dir_name}' created.")
+    except FileExistsError:
+        print(f"Directory '{dir_name}' already exists.")
+
 # Main function
 def main():
     draw_mellow()
     print(f"{Fore.YELLOW}Welcome to the Mellow Cat command-line tool!{Style.RESET_ALL}")
-    print("You can use this tool to read a file and display its contents.")
+    print("You can use this tool to perform various file system operations.")
 
     while True:
         command = input(f"{Fore.CYAN}mellowcat>{Style.RESET_ALL} ").strip()
@@ -79,7 +91,7 @@ def main():
                 for line in file_contents:
                     print(line.strip())
 
-        elif parts[0] == "dir":
+        elif parts[0] == "dir" or parts[0] == "ls":
             list_files()
 
         elif parts[0] == "cd":
@@ -89,6 +101,17 @@ def main():
 
             new_dir = ' '.join(parts[1:])
             change_directory(new_dir)
+
+        elif parts[0] == "pwd":
+            print_current_directory()
+
+        elif parts[0] == "mkdir":
+            if len(parts) < 2:
+                print("Invalid command. Please provide the directory name.")
+                continue
+
+            dir_name = ' '.join(parts[1:])
+            make_directory(dir_name)
 
         elif parts[0] == "exit":
             print("Exiting...")
