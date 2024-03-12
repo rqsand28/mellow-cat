@@ -1,0 +1,2 @@
+[console_scripts]
+mellow-cat = mellow_cat.mellow_cat:main
